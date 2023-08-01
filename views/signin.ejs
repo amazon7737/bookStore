@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+
+    <style>
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.wrap{
+    width: 100vw;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
+    </style>
+</head>
+
+<body>
+
+<div class="wrap">
+    <form action="/user/signin" method = "post">
+        <div class="userId">
+            <input type = "text" name = "user_id" placeholder="아이디">
+
+        </div>
+        <div class="userPass">
+            <input type = "password" name = "password" placeholder="비밀번호">
+        </div>
+
+        <div class="login">
+            <button type = "submit" >로그인</button>
+        </div>
+<div class="signup">
+    <button type = "button" onclick="location.href = `/user/signup`" >회원가입하기</button>
+
+</div>
+    </form>
+
+</div>
+</body>
+
+</html>

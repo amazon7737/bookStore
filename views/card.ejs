@@ -1,0 +1,146 @@
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    height: 460px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: rgb(0 0 0 / 4%) 0px 8px 16px 0px;
+    margin: 8px;
+    overflow: hidden;
+    transition: all 0.5s;
+  }
+  .card > .image {
+    flex: 1;
+  }
+
+  .card > .content {
+    flex: 1;
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+  }
+
+  .card > .user {
+    flex: 1;
+    padding: 10px 16px;
+    flex-direction: row;
+    align-items: center;
+    border-top: 1px solid #f1f3f5;
+    display: flex;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+  }
+
+  .card:hover {
+    box-shadow: 0px 8px 16px #ccc;
+    transform: translateY(-16px);
+  }
+
+  .card > .content > .title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 10px;
+  }
+  .card > .content > .inner {
+    /* border-top: 1px solid #f1f3f5; */
+
+    /* font-size: 15px; */
+
+    /* font-weight: lighter; */
+    /*  */
+    margin-bottom: 20px;
+    color: #495057;
+    line-height: 1.5;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    flex: 3;
+    /* vertical-align: top;
+        text-align: left;
+        padding-left: 10px; */
+  }
+
+  .card img {
+    /* position: absolute; */
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .card > .user > .a > .userinfo {
+    /* text-align: left; */
+    /* padding-right: 160px; */
+
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+  }
+
+  .a > .userinfo img {
+    object-fit: cover;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: block;
+    margin-right: 0.5rem;
+  }
+
+  .user > .likes {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+  }
+
+  .user > .likes svg {
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-right: 0.5rem;
+  }
+
+  /* .span  {
+            color: #868E96;d
+  
+        } */
+
+  .card > .info {
+    padding: 0.625rem 1rem;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--text3);
+  }
+</style>
+
+<div class="card">
+  <div class="image">
+  </div>
+
+  <div class="content">
+
+    <div class="title">
+        <%- book[i].book_name %>
+    </div>
+  </div>
+
+  <div class="info">
+    <span>₩ <%- book[i].book_price %> </span>
+
+    <span class="separator">·</span>
+  </div>
+
+  <div class="user">
+    <div class="a">
+      <!-- <a href="" class="userinfo"> -->
+        <!-- <img src="images/2.jpg" alt="심슨의 사진" /> -->
+      </a>
+    </div>
+  </div>
+</div>

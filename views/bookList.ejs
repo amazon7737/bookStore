@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+<style>
+
+    p{
+        text-decoration-line: none;
+      color: black;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+    }
+
+    .book_list{
+        width: 200px;
+
+    }
+
+</style>
+</head>
+<body>
+    <!-- 뻣뻣한 도서목록 ( 안쓰고 있음) -->
+    <div class = "wrap2" >
+        <div class = "book_list" >
+<table style = "width : 100%">
+        <col span = "2"/>
+    <tr >
+        <th>책이름</th>
+        <th>책가격</th>
+</tr>
+<% for(var i =0; i<book.length; i++) { %>
+    
+<tr>
+</tr>
+<tr>
+    <td><%= book[i].book_name %></td>
+    <td><%= book[i].book_price %></td>
+</tr>
+<% } %>
+    </table>
+        </div>
+
+
+    </div>
+</body>
+</html>

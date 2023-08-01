@@ -1,0 +1,62 @@
+<!-- addParcel address -->
+
+<!-- form 태그 sess 삭제된 상태 -->
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  .wrap {
+    width: 100vw;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+
+<div class="wrap">
+  <div class="w-50 container mt-5">
+    <div class="col-auto mb-3">
+      <label class="col-form-label">우편번호</label>
+      <input
+        name="destination_post"
+        data-name="우편번호"
+        type="text"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="col-auto mb-3">
+      <label class="col-form-label">기본주소</label>
+      <input
+        name="destination_addr"
+        data-name="기본주소"
+        type="text"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="col-auto mb-5">
+      <label class="col-form-label">상세주소</label>
+      <input
+        name="destination_detail"
+        data-name="상세주소"
+        type="text"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="col-auto">
+      <button
+        type="submit"
+        class="w-100 btn btn-primary btn-lg"
+        style="height: 65px"
+        ;
+      >
+        확인
+      </button>
+    </div>
+  </div>
+</div>

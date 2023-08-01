@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      .wrapcard {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        background-color: #f8f9fa;
+      }
+    </style>
+  </head>
+  <body>
+    <% include ./navbar.ejs %>
+    <div class="wrapcard">
+      <% for(var i =0; i< book.length; i++) { %>
+      <input
+        type="hidden"
+        name="book_number"
+        value="<%=book[i].book_number %>"
+      />
+      <a href="user/<%= book[i].book_number%>"> <% include ./card.ejs %> </a>
+      <% } %>
+    </div>
+  </body>
+</html>
