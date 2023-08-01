@@ -25,7 +25,7 @@
         name="book_number"
         value="<%=book[i].book_number %>"
       />
-      <a href="user/bookdetail/<%= book[i].book_number%>">
+      <a href="/user/bookdetail/<%= book[i].book_number%>">
         <% include ./card.ejs %>
       </a>
       <% } %>

@@ -1,10 +1,54 @@
 <!DOCTYPE html>
 <head>
+<style>
+    *{
+        padding:0;
+        margin:0;
+    }
+    .wrap{
+        width: 100vw;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
+   
+    }
+    .box{
+
+    border: 1px solid black;
+    border-radius: 8px;
+ 
+    }
+    p{
+        padding-bottom: 10px;
+    }
+
+
+</style>
 </head>
 
 <body>
-    <p><% console.log("!!", book); %></p>
+    <% include ./navbar.ejs %>
+    <div class="wrap">
+<div class="box">
+
+    <p><%= book[0].book_number %>번 도서</p>
+    <p>책 이름 : <%= book[0].book_name %></p>
+    <p>수량 : <%= book[0].book_rest %></p>
+    <p>책 가격 :₩ <%= book[0].book_price %></p>
+</div>
+    </div>
+
+    <div class="sessState">
+        <% if(sess != null) { %>
+            <button type = "button" onclick="location.href='#'">구매</button>
+            <button type = "button" onclick = "location.href='/user/addItem/<%= book[0].book_number %>'">담기</button>
+        
+        <%} %>
+    </div>
+
 </body>
 
 </html>

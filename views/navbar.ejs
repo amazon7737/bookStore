@@ -84,24 +84,24 @@
 
             <!-- 검색 -->
           <div class = "searchContent">
-        <form class="form-inline my-2 my-lg-0">
-          <input
+        <form class="form-inline my-2 my-lg-0" action = "/user/search" method="post">
+          </div>
+          &nbsp;
+          &nbsp;
+          <div class="searchButton">
+<input
             class="form-control mr-sm-2"
-            type="search"
+            type="text"
+            name = "key"
             placeholder="검색할 내용을 입력해주세요."
             aria-label="Search"
           />
-
-          </div>
-          &nbsp;
-          &nbsp;
-          <div class = "searchButton">
           <button class="btn btn-sm btn-outline-secondary" type="submit">
             검색
           </button>
-          </div>
+            </form>
 
-          </form>
+          </div>
           &nbsp;
           &nbsp;
           <% if(sess == null) { %>
@@ -117,7 +117,7 @@
 <a class = "user_name" ><%= sess %>님</a>
 <a class = "logout" href = "/user/logout">로그아웃</a>
 <a class = "myPage">마이페이지</a>
-<a class = "basKet">장바구니</a>
+<a class = "basKet" href = "user/basket">장바구니</a>
 <a class = "orderlist">주문내역</a>
   </div>
 

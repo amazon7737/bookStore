@@ -5,7 +5,7 @@ const pool = require("../db/db");
  *  해야할것:
  *
  *  - 중복 회원 조회 기능
- *  - 로그인 세션 기능
+ *  - 로그인 세션 기능(완료)
  *
  *
  */
@@ -75,8 +75,6 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// 로그아웃 기능
-
 // 책 리스트 조회
 // router.get("/bookList", async (req, res) => {
 //   // const book = await pool.query("select * from book.book_list;");
@@ -97,7 +95,8 @@ router.get("/parCel", async (req, res) => {
 // 마이페이지
 
 // 도서 상세 페이지
-router.get("/:book_number", async (req, res) => {
+router.get("/bookdetail/:book_number", async (req, res) => {
+  const sess = req.session.user_id;
   // console.log(req.params);
   const { book_number } = req.params;
   const book = await pool.query(
@@ -106,9 +105,81 @@ router.get("/:book_number", async (req, res) => {
   );
   // console.log(book[0]);
   try {
-    res.render("bookDetail", { book: book[0] });
+    res.render("bookDetail", { book: book[0], sess: sess });
   } catch (error) {
     console.log(error);
+  }
+});
+
+// 장바구니 담기
+router.get("/addItem/:book_number", async (req, res) => {
+  // console.log("???", req.params);
+  const sess = req.session.user_id;
+  const { book_number } = req.params;
+  // console.log("book_number:", book_number);
+  // const book = await pool.query(
+  //   "select * from book.book_list where book_number = ?",
+  //   [book_number]
+  // );
+
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = today.getMonth();
+  let date = today.getDate();
+  const wdate = year + "-" + month + "-" + date;
+  try {
+    const basket = await pool.query(
+      "insert into book.basket values( null, ?, ?, ?)",
+      [wdate, book_number, sess]
+    );
+    // console.log(basket[0]);
+    return res.send(
+      `<script type = "text/javascript" >alert("장바구니에 담았습니다.");location.href='/main';</script>`
+    );
+  } catch (error) {
+    console.log(error);
+  }
+  res.redirect("/main");
+});
+
+// 장바구니 조회 (작업중)
+router.get("/basket", async (req, res) => {
+  const sess = req.session.user_id;
+  const basket = await pool.query(
+    "select * from book.basket where user_user_id = ?",
+    [sess]
+  );
+
+  // 이차원 배열
+  console.log(basket[0]);
+  // console.log("!!", basket[0]);
+
+  // const book = await pool.query(
+  //   "select * from book.book_list where book_number=?",
+  //   [basket[0].book_list_book_number]
+  // );
+  // console.log(book[0]);
+
+  res.render("basket");
+});
+
+// 검색
+router.post("/search", async (req, res) => {
+  const { key } = req.body;
+  const sess = req.session.user_id;
+
+  // console.log(key);
+  const search = await pool.query(
+    "select * from book.book_list where book_name like ?",
+    ["%" + key + "%"]
+  );
+  if (key.length === 0) {
+    return res.send(`<script type = "text/javascript">
+    alert("검색어를 입력해주세요.");
+    location.href='/main';
+    </script>`);
+  } else {
+    return res.render("booksearch", { book: search[0], sess: sess });
   }
 });
 
