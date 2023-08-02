@@ -13,6 +13,7 @@
       * {
         padding: 0;
         margin: 0;
+
       }
       .wrap {
         width: 100vw;
@@ -22,23 +23,12 @@
         justify-content: center;
         align-items: center;
       }
+
       a {
         color: #212529;
         text-decoration: none;
       }
-      .searchContent{
-        display:flex;
-        flex-direction: row;
-        justify-content: flex-start;
-      }
 
-      .searchButton{
-        display: inline;
-      }
-      .search .button{
-        text-decoration-line: none;
-        color: #212529;
-      }
       .navbar{
         display: flex;
         flex-direction: row;
@@ -48,13 +38,13 @@
       .title{
         padding-left: 12px;
       }
-      .button{
+      .loginButton{
         padding-right: 10px;
       }
       .loginState{
         display: inline-block;
       }
-      .looutState{
+      .logoutState{
         display: inline-block;
       }
 
@@ -68,46 +58,40 @@
       crossorigin="anonymous"
     ></script>
 
-    <!-- <div class="wrap">
-      <a href="/user/signin">로그인하기</a>
-    </div> -->
 
     <!--  -->
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class = "title">
-
       <a class="navbar-brand" href="/main">도서구매</a>
       </div>
-      </button>
+
       <div class = "navbar">
 
             <!-- 검색 -->
-          <div class = "searchContent">
         <form class="form-inline my-2 my-lg-0" action = "/user/search" method="post">
-          </div>
           &nbsp;
           &nbsp;
-          <div class="searchButton">
-<input
+
+          <input
+          id = "searchBar"
             class="form-control mr-sm-2"
             type="text"
             name = "key"
             placeholder="검색할 내용을 입력해주세요."
             aria-label="Search"
           />
-          <button class="btn btn-sm btn-outline-secondary" type="submit">
+          <button id = "searchButton" class="btn btn-sm btn-outline-secondary" type="submit">
             검색
           </button>
-            </form>
+          </form>
 
-          </div>
           &nbsp;
           &nbsp;
           <% if(sess == null) { %>
-          <div class = "logoutState">
 
-          <a class = "button" href = "/user/signin" >로그인하기</a>
+          <div class = "logoutState">
+          <a class = "loginButton" href = "/user/signin" >로그인하기</a>
 
           </div>
 <% } else { %>
@@ -123,11 +107,6 @@
 
 
 <% } %>
-          <!-- ~~님 -->
-          <!-- 로그아웃 -->
-          <!-- 마이페이지 -->
-          <!-- 장바구니 -->
-          <!-- 주문내역 -->
         </form>
 
 
