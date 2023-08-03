@@ -25,8 +25,21 @@ router.post("/signin", async (req, res) => {
       "select * from book.user where user_id = ? and password = ?",
       [user_id, password]
     );
-    req.session.user_id = user_id;
-    console.log(req.session.user_id);
+
+    console.log("login:", login[0]);
+
+    if (login[0].length === 0) {
+      return res.send(
+        `<script type="text/javascript">
+        alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+        location.href='./signin';
+        </script>`
+      );
+      res.redirect("/signin");
+    } else {
+      req.session.user_id = user_id;
+      console.log(req.session.user_id);
+    }
     return res.redirect("/main");
   } catch (error) {
     console.log(error);
@@ -143,24 +156,23 @@ router.get("/addItem/:book_number", async (req, res) => {
 });
 
 // 장바구니 조회 (작업중)
+// join 사용
 router.get("/basket", async (req, res) => {
   const sess = req.session.user_id;
+
   const basket = await pool.query(
-    "select * from book.basket where user_user_id = ?",
+    "SELECT * FROM book.basket a inner join book.book_list b on a.book_list_book_number = b.book_number and a.user_user_id = ?;",
     [sess]
   );
 
-  // 이차원 배열
   console.log(basket[0]);
-  // console.log("!!", basket[0]);
 
-  // const book = await pool.query(
-  //   "select * from book.book_list where book_number=?",
-  //   [basket[0].book_list_book_number]
-  // );
-  // console.log(book[0]);
+  res.render("basket", { basket: basket[0] });
 
-  res.render("basket");
+  /**
+   *
+   * 수량을 기준으로 데이터를 땡겨와야될지 , 장바구니 담기에서 애초에 개수를 추가해야될지.
+   */
 });
 
 // 검색

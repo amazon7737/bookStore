@@ -18,6 +18,15 @@
         </tr>
       </tbody>
     </table>
+    <% for(var i =0; i< basket.length ; i++) { %>
+
+    <p><%= basket[i].book_name %></p>
+    <p><%= basket[i].book_price %></p>
+    <p><%= basket[i].user_user_id %>님</p>
+    <p><%= basket[i].book_name %></p>
+    <p><%= basket[i].book_name %></p>
+
+    <% } %>
     <!-- 구매 -->
     <button type="button" onclick="location.href = '#'">구매</button>
   </div>
