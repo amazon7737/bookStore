@@ -6,18 +6,6 @@
 
 
 ```
-inner join : id 중복 시키면 출력
-
-a 테이블 :  basket 테이블
-
-b 테이블 : book 테이블
-
-book_number 이용해서 book 정보 join 해오고 , session 값 id에 매치 시키니깐 해결
-
-
-```
-
-```
 [해야할것]
 
 * 회원가입 유효성 검사 구현
