@@ -1,1 +1,78 @@
 <!-- myPage -->
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    .wrap {
+        width: 100vw;
+        height: 500px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+    table,
+    th,
+    td {
+        padding-right: 10px;
+    }
+    .wrap .btnAdd {
+        display: flex;
+    }
+</style>
+<div class="wrap">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" class="thead">신용카드 번호</th>
+                <th scope="col" class="thead">신용카드 종류</th>
+                <th scope="col" class="thead">신용카드 유효기간</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i =0; i< card.length; i++) { %>
+            <tr>
+                <th scope="row" class="cardId"><%= card[i].card_number %></th>
+                <td class="cardDate"><%= card[i].card_date %></td>
+                <td class="cardKind"><%= card[i].card_kind %></td>
+                <td>
+                    <div class="btn">
+                        <button type="button" class="btnEdit">수정</button>
+                        <button type="submit" class="btnDel">삭제</button>
+                    </div>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <button type="button" class="btnAdd" onClick="location.href='/user/addCard'">추가</button>
+</div>
+
+<div class="wrap">
+    <table calss="table">
+        <thead>
+            <tr>
+                <th scope="col" class="parcelId">배송지 우편번호</th>
+                <th scope="col" class="parcelId">배송지 기본주소</th>
+                <th scope="col" class="parcelId">배송지 상세주소</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i = 0; i< parcel.length; i++) { %>
+            <tr>
+                <th scope="row" class="parcelNumber"><%= parcel[i].parcel_number %></th>
+                <td class="parcelAddr"><%= parcel[i].user_address %></td>
+                <td class="parcelDetail"><%= parcel[i].user_address2 %></td>
+                <td>
+                    <div class="btn">
+                        <button type="button" class="parcelEdit">수정</button>
+                        <button type="submit" class="parcelDel">삭제</button>
+                    </div>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <button type="button" class="parcelAdd" onClick="location.href='/user/addParcel'">추가</button>
+</div>

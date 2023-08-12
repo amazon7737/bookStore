@@ -1,33 +1,55 @@
 <!-- 장바구니 -->
+<head>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .wrap {
+            padding-top: 10rem;
+            padding-left: 10rem;
+            padding-right: 10rem;
+            justify-content: center;
+            align-items: center;
+        }
+        .title {
+            padding-bottom: 20px;
+        }
+        th {
+            padding-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="container">
+            <!-- <h2>생성일자:</h2> -->
+            <form action="/purchase" method="post">
+                <p class="title"><%= basket[0].user_user_id %>님이 담으신 책 입니다.</p>
+                <hr />
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">책이름</th>
+                            <th scope="col">가격</th>
+                            <th scope="col">수량</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var i =0; i< basket.length ; i++) { %>
+                        <tr>
+                            <th scope="col"><%= basket[i].book_name %></th>
+                            <th scope="col"><%= basket[i].book_price %></th>
+                            <th scope="col"><%= basket[i].rest %></th>
+                            <!-- 삭제 -->
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
 
-<div class="wrap">
-  <div class="container">
-    <h2>생성일자:</h2>
-
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">책이름</th>
-          <th scope="col">가격</th>
-          <th scope="col">수량</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <!-- 삭제 -->
-        </tr>
-      </tbody>
-    </table>
-    <% for(var i =0; i< basket.length ; i++) { %>
-
-    <p><%= basket[i].book_name %></p>
-    <p><%= basket[i].book_price %></p>
-    <p><%= basket[i].user_user_id %>님</p>
-    <p><%= basket[i].book_name %></p>
-    <p><%= basket[i].book_name %></p>
-
-    <% } %>
-    <!-- 구매 -->
-    <button type="button" onclick="location.href = '#'">구매</button>
-  </div>
-</div>
+                <!-- 구매 -->
+                <button type="button" onclick="location.href = '#'">구매</button>
+            </form>
+        </div>
+    </div>
+</body>

@@ -16,12 +16,14 @@
     align-items: center;
   }
 </style>
+<form action = "/user/addCard", method="post">
+
 <div class="wrap">
   <div class="w-50 container mt-5">
     <div class="col-auto mb-3">
       <label class="col-form-label">카드 번호</label>
       <input
-        name="card_uid"
+        name="card_number"
         data-name="카드 번호"
         type="text"
         class="form-control"
@@ -31,7 +33,7 @@
     <div class="col-auto mb-3">
       <label class="col-form-label">카드 유효기간</label>
       <input
-        name="card_exp"
+        name="card_date"
         data-name="카드 유효기간"
         type="text"
         class="form-control"
@@ -41,7 +43,7 @@
     <div class="col-auto mb-5">
       <label class="col-form-label">카드 종류</label>
       <input
-        name="card_com"
+        name="card_kind"
         data-name="카드 종류"
         type="text"
         class="form-control"
@@ -59,4 +61,5 @@
       </button>
     </div>
   </div>
+</form>
 </div>

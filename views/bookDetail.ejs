@@ -43,9 +43,15 @@
 
     <div class="sessState">
         <% if(sess != null) { %>
+            <form action = "/user/addItem/<%= book[0].book_number %>" method="post">
+
             <button type = "button" onclick="location.href='#'">구매</button>
-            <button type = "button" onclick = "location.href='/user/addItem/<%= book[0].book_number %>'">담기</button>
-        
+            <input type = "number" name="rest" value = "1">
+            <input type = "hidden" name = "book_number" value = <%= book[0].book_number %>
+
+            <button type = "button" onclick = "location.href='/user/addItem/<%= book[0].book_number %>'"></button>
+            <button type = "submit" >담기</button>
+            </form>
         <%} %>
     </div>
 
