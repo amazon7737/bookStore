@@ -6,7 +6,10 @@ const pool = require('../db/db');
  *
  *  - 중복 회원 조회 기능
  *  - 로그인 세션 기능(완료)
- *
+ *  - 주문서 작성
+ *  - 바로 구매 기능
+ *  - 장바구니에 추가된 물품 구매 기능
+ *  - 주문 내역 기능
  *
  */
 
@@ -84,7 +87,15 @@ router.post('/signup', async (req, res) => {
         console.log('user_id:', user_id);
         return res.redirect('/');
     } catch (error) {
-        console.log(error);
+        if (user_id.length == 0 || password.length == 0 || user_name.length == 0) {
+            return res.send(
+                `<script type = "text/javascript">alert("아이디 및 비밀번호를 확인해주세요."); location.href = '/user/signin';</script>`
+            );
+        } else {
+            return res.send(
+                `<script type = "text/javascript" >alert("이미 존재하는 회원입니다.");location.href='/user/signin';</script>`
+            );
+        }
     }
 });
 

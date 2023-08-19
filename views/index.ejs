@@ -1,34 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      * {
-        padding: 0;
-        margin: 0;
-      }
+    <head>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
 
-      .wrapcard {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        background-color: #f8f9fa;
-      }
-    </style>
-  </head>
-  <body>
-    <% include ./navbar.ejs %>
-    <div class="wrapcard">
-      <% for(var i =0; i< book.length; i++) { %>
-      <input
-        type="hidden"
-        name="book_number"
-        value="<%=book[i].book_number %>"
-      />
-      <a href="user/bookdetail/<%= book[i].book_number%>">
-        <% include ./card.ejs %>
-      </a>
-      <% } %>
-    </div>
-  </body>
+            .wrapcard {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+                background-color: #f8f9fa;
+            }
+            @keyframes enter-animation {
+                0% {
+                    transform: translateY(100px);
+                    opacity: 0;
+                }
+                100% {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+            @media (prefers-reduced-motion: no-preference) {
+                .wrap-animation {
+                    animation: enter-animation 0.8s 1;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <% include ./navbar.ejs %>
+        <div class="wrapcard">
+            <% for(var i =0; i< book.length; i++) { %>
+
+            <input type="hidden" name="book_number" value="<%=book[i].book_number %>" />
+
+            <a href="user/bookdetail/<%= book[i].book_number%>"> <% include ./card.ejs %> </a>
+            <% } %>
+        </div>
+    </body>
+
+    <script type="text/javascript">
+        const observer = new IntersectionObserver((entries) => {
+            // Loop over the entries
+            entries.forEach((entry) => {
+                // If the element is visible
+                if (entry.isIntersecting) {
+                    // Add the animation class
+                    entry.target.classList.add('wrap-animation');
+                }
+            });
+        });
+        const viewbox = document.querySelectorAll('.wrapcard');
+        viewbox.forEach((image) => {
+            observer.observe(image);
+        });
+    </script>
 </html>

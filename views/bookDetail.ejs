@@ -5,6 +5,7 @@
         padding:0;
         margin:0;
     }
+
     .wrap{
         width: 100vw;
     height: 500px;
@@ -15,14 +16,37 @@
 
    
     }
+
     .box{
     border: 1px solid black;
     border-radius: 8px;
     padding: 10px;
  
     }
+
     p{
         padding-bottom: 10px;
+    }
+
+    .sessState{
+        padding-top:10px;
+    }
+
+    @keyframes enter-animation {
+        0% {
+            transform: translateY(100px);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        .wrap-animation{
+            animation: enter-animation 0.8s 1;
+        }
     }
 
 
@@ -31,14 +55,13 @@
 
 <body>
     <% include ./navbar.ejs %>
-    <div class="wrap">
-<div class="box">
+<div class="wrap">
+    <div class="box">
 
-    <p><%= book[0].book_number %>번 도서</p>
-    <p>책 이름 : <%= book[0].book_name %></p>
-    <p>수량 : <%= book[0].book_rest %></p>
-    <p>책 가격 :₩ <%= book[0].book_price %></p>
-</div>
+        <p><%= book[0].book_number %>번 도서</p>
+        <p>책 이름 : <%= book[0].book_name %></p>
+        <p>수량 : <%= book[0].book_rest %></p>
+        <p>책 가격 :₩ <%= book[0].book_price %></p>
     </div>
 
     <div class="sessState">
@@ -49,12 +72,30 @@
             <input type = "number" name="rest" value = "1">
             <input type = "hidden" name = "book_number" value = <%= book[0].book_number %>
 
+
             <button type = "button" onclick = "location.href='/user/addItem/<%= book[0].book_number %>'"></button>
             <button type = "submit" >담기</button>
             </form>
         <%} %>
     </div>
+</div>
 
+<script type = "text/javascript" >
+      const observer = new IntersectionObserver((entries) => {
+            // Loop over the entries
+            entries.forEach((entry) => {
+                // If the element is visible
+                if (entry.isIntersecting) {
+                    // Add the animation class
+                    entry.target.classList.add('wrap-animation');
+                }
+            });
+        });
+        const viewbox = document.querySelectorAll('.wrap');
+        viewbox.forEach((image) => {
+            observer.observe(image);
+        }); 
+</script>
 </body>
 
 </html>

@@ -36,17 +36,30 @@
         justify-content: space-between;
         align-items: center;
       }
-      .title{
-        padding-left: 12px;
+
+      /* .title{
+        padding-left: 1rem;
+      } */
+
+      .siteTitle{
+        padding-left: 7.5rem;
       }
       .loginButton{
         padding-right: 10px;
       }
       .loginState{
         display: inline-block;
+        padding-right: 7.5rem;
       }
       .logoutState{
         display: inline-block;
+      }
+      .search{
+        display: flex;
+      }
+      .search #searchButton{
+        width: 100px;
+        height: 50px;
       }
 
     </style>
@@ -60,62 +73,56 @@
     ></script>
 
 
-    <!--  -->
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class = "title">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class = "siteTitle">
       <a class="navbar-brand" href="/main">도서구매</a>
       </div>
 
       <div class = "navbar">
 
-            <!-- 검색 -->
-        <form class="form-inline my-2 my-lg-0" action = "/user/search" method="post">
-          &nbsp;
-          &nbsp;
+      <!-- 검색 -->
+            <form class="form-inline my-2 my-lg-0" action = "/user/search" method="post">
+              &nbsp;
+              &nbsp;
+              <div class="search">
 
-          <input
-          id = "searchBar"
-            class="form-control mr-sm-2"
-            type="text"
-            name = "key"
-            placeholder="검색할 내용을 입력해주세요."
-            aria-label="Search"
-          />
-          <button id = "searchButton" class="btn btn-sm btn-outline-secondary" type="submit">
-            검색
-          </button>
+              <input
+                id = "searchBar"
+                  class="form-control mr-sm-2"
+                  type="text"
+                  name = "key"
+                  placeholder="검색할 내용을 입력해주세요."
+                  aria-label="Search"
+                />
+                &nbsp;
+                &nbsp;
+                  <button id = "searchButton" class="btn btn-sm btn-outline-secondary" type="submit">
+                    검색
+                  </button>
+              </div>
+                </form>
+              &nbsp;
+              &nbsp;
+              <% if(sess == null) { %>
+
+                <div class = "logoutState">
+                  <a class = "loginButton" href = "/user/signin" >로그인하기</a>
+
+                </div>
+              <% } else { %>
+              <div class = "loginState">
+                <a class = "user_name" ><%= sess %>님</a>
+                <a class = "logout" href = "/user/logout">로그아웃</a>
+                <a class = "myPage" href = "/user/myPage">마이페이지</a>
+                <a class = "basKet" href = "user/basket">장바구니</a>
+                <a class = "orderlist">주문내역</a>
+              </div>
+
+
+                <% } %>
           </form>
-
-          &nbsp;
-          &nbsp;
-          <% if(sess == null) { %>
-
-          <div class = "logoutState">
-          <a class = "loginButton" href = "/user/signin" >로그인하기</a>
-
-          </div>
-<% } else { %>
-
-  <div class = "loginState">
-
-<a class = "user_name" ><%= sess %>님</a>
-<a class = "logout" href = "/user/logout">로그아웃</a>
-<a class = "myPage" href = "/user/myPage">마이페이지</a>
-<a class = "basKet" href = "user/basket">장바구니</a>
-<a class = "orderlist">주문내역</a>
-  </div>
-
-
-<% } %>
-        </form>
-
-
-      </div>
-    </nav>
-
-      </div>
-
-    <!--  -->
+        </div>
+    </div>
+  </nav>
   </body>
 </html>
