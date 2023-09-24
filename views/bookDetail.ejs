@@ -8,6 +8,7 @@
         margin:0;
     }
 
+
     .wrap{
         width: 100vw;
     height: 500px;
@@ -15,12 +16,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-   
     }
 
+
     .box{
-        margin-top: 10%;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20%;
         width: 70%;
         height: 1000px;
         border-radius: 8px;
@@ -41,6 +43,13 @@
     .button2{
         margin-top:20px;
     }
+    .image{
+        padding-left: 10%;
+    }
+    .book-content{
+        padding: 10% 10%;
+        padding-right: 20%;
+    }
 
     /* -------- */
 
@@ -55,10 +64,20 @@
 <div class="wrap">
     <div class="box">
 
+        <div class ='image'>
+
+        <img src="/images/<%- book[0].book_number %>.png" alt="" style="width: 320px;height: 540px;background: var(--gray-700);border-radius: 4px;"/>
+
+        </div>
+
+        <div class = "book-content">
+
         <p><%= book[0].book_number %>번 도서</p>
         <p>책 이름 : <%= book[0].book_name %></p>
         <p>수량 : <%= book[0].book_count %></p>
         <p>책 가격 :₩ <%= book[0].book_price %></p>
+
+        </div>
     </div>
 
     <div class="sessState">
