@@ -1,8 +1,8 @@
 <!-- addaddress address -->
 
+<!-- form 태그 sess 삭제된 상태 -->
 <head>
 
-<!-- form 태그 sess 삭제된 상태 -->
 <style>
     /* css */
     * {
@@ -23,36 +23,36 @@
 
 </head>
 <div class="wrap">
-    <form action="/user/addParcel" method="post">
+    <form action="/user/editParcel" method="post">
         <div class="w-50 container mt-5">
             <div class="col-auto mb-3">
                 <label class="col-form-label">우편번호</label>
                 <input
-                    name="address_id"
-                    data-name="우편번호"
-                    type="text"
-                    class="form-control"
-                    required
+                        name="address_postnum"
+                        data-name="우편번호"
+                        type="text"
+                        class="form-control"
+                        value = "<%- address[0].address_postnum%>"
                 />
             </div>
             <div class="col-auto mb-3">
                 <label class="col-form-label">기본주소</label>
                 <input
-                    name="address_basicaddress"
-                    data-name="기본주소"
-                    type="text"
-                    class="form-control"
-                    required
+                        name="address_basicaddress"
+                        data-name="기본주소"
+                        type="text"
+                        class="form-control"
+                        value = "<%- address[0].address_basicaddress%>"
                 />
             </div>
             <div class="col-auto mb-5">
                 <label class="col-form-label">상세주소</label>
                 <input
-                    name="address_detailaddress"
-                    data-name="상세주소"
-                    type="text"
-                    class="form-control"
-                    required
+                        name="address_detailaddress"
+                        data-name="상세주소"
+                        type="text"
+                        class="form-control"
+                        value = "<%- address[0].address_datailaddress%>"
                 />
             </div>
             <div class="col-auto">

@@ -9,6 +9,7 @@ router.get('/', async (req, res) => {
     // console.log(book[0]);
     let sess = req.session.user_id;
     console.log('sess:', sess);
+    // console.log(book[0]);
 
     res.render('index', { book: book[0], sess: sess });
 });

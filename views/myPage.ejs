@@ -33,6 +33,7 @@
         padding-top: 5px;
         margin-top: 10%;
         flex-direction: row;
+        background-color: white;
     }
 
     .thead{
@@ -62,6 +63,8 @@
             <th scope="col" class="thead">신용카드 번호</th>
             <th scope="col" class="thead">신용카드 종류</th>
             <th scope="col" class="thead">신용카드 유효기간</th>
+            <th><a class = "btn btn-light" href = "/user/addCard">신용카드추가</a></th>
+
         </tr>
 
         </thead>
@@ -73,11 +76,15 @@
             <td class="cardDate"><%= card[i].card_type %></td>
             <td class="cardKind"><%= card[i].card_date %></td>
             <td>
-                    <form action = "/user/card/update/<%= card[0].card_id %>" method="post">
+                <div class = "btn">
+                    <form action = "/user/card/update/<%= card[i].card_id %>" method="post">
                         <input type = "hidden" name = "pid" value = "<%=card[i].card_id %>" />
                         <button type="submit" class="btn btn-light">수정</button>
                     </form>
+                    <a href = "/user/cardDel/<%= card[0].card_id %>" method = "post">
                     <button type="submit" class="btn btn-light">삭제</button>
+                    </a>
+                </div>
 
             </td>
         </tr>
@@ -98,6 +105,7 @@
             <th scope="col" class="thead">배송지 우편번호</th>
             <th scope="col" class="thead">배송지 기본주소</th>
             <th scope="col" class="thead">배송지 상세주소</th>
+            <th><a class = "btn btn-light" href = "/user/addParcel">배송지추가</a></th>
         </tr>
 
         </thead>
@@ -105,15 +113,17 @@
                     <% for(var i = 0; i< address.length; i++) { %>
         <tbody>
         <tr>
-            <th scope="row" class="cardId"><%= address[i].address_id %></th>
+            <th scope="row" class="cardId"><%= address[i].address_postnum %></th>
             <td class="cardDate"><%= address[i].address_basicaddress %></td>
             <td class="cardKind"><%= address[i].address_datailaddress %></td>
             <td>
-                    <form action = "/address/update/<%= address[0].address_id %>" method="post">
+                    <form action = "/user/address/update/<%= address[i].address_id %>" method="post">
                         <input type = "hidden" name = "pid" value = "<%=address[i].address_id%>" />
                         <button type="submit" class="btn btn-light">수정</button>
                     </form>
+                <a href = "/user/parcelDel/<%= address[i].address_id %>" method = "post">
                     <button type="submit" class="btn btn-light">삭제</button>
+                </a>
 
             </td>
         </tr>

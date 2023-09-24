@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     width: 320px;
-    height: 460px;
+    height: 480px;
     background-color: white;
     border-radius: 8px;
     box-shadow: rgb(0 0 0 / 4%) 0px 8px 16px 0px;
@@ -41,7 +41,7 @@
     transform: translateY(-16px);
   }
 
-  .card > .content > .title {
+  .title {
     font-size: 20px;
     font-weight: bold;
     text-align: left;
@@ -105,14 +105,17 @@
 </style>
 
 <div class="card">
+
   <div class="image">
+
   </div>
 
   <div class="content">
+    <img
+            src="/images/<%- book[i].book_number %>.png"
+            alt=""
+            style="width: 80%;height: 100%;background: var(--gray-700);border-radius: 4px;"/>
 
-    <div class="title">
-        <%- book[i].book_name %>
-    </div>
   </div>
 
   <div class="info">
@@ -121,6 +124,9 @@
   </div>
 
   <div class="user">
+    <div class="title">
+      <%- book[i].book_name %>
+    </div>
     <span>₩ <%- book[i].book_price %> </span>
 
   </div>

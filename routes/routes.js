@@ -4,14 +4,19 @@ const pool = require('../db/db');
 /**
  *  해야할것:
  *
- *  - 중복 회원 조회 기능(폐기 => 구현 필요성 못느낌)
- *  - 로그인 세션 기능(완료)
+ *  - 중복 회원 조회 기능 (폐기 => 구현 필요성 못느낌)
+ *  - 로그인 세션 기능 (완료)
  *  - 주문서 작성
- *  - 바로 구매 기능
- *  - 장바구니에 추가된 물품 구매 기능
+ *  - 책 상세페이지에서 바로 구매 기능
+ *  - 장바구니에 추가된 물품 바로 구매 기능
  *  - 주문 내역 기능(완료)
+ *  - 배송지 목록 삭제 , 수정 기능(완료)
+ *  - 카드 목록 삭제 , 수정 기능(완료)
  *  - 장바구니 물품 삭제 기능
- *
+ *  - 장바구니 ui 수정
+ *  - 페이지들 ui 검사
+ *  - 주문내역 페이지
+ *  - 책 이미지 넣기 작업
  */
 
 // 로그인 페이지
@@ -147,7 +152,9 @@ router.post('/addCard', async (req, res) => {
 router.post("/card/update/:target", async(req, res) => {
     const sess = req.session.user_id;
     const pid = req.body.pid;
-    const card = await pool.query("select * from card where user_user_id = ?", [sess]);
+    const card = await pool.query("select * from card where user_user_id = ? and card_id =?", [
+        sess, pid
+    ]);
     console.log(card[0]);
     console.log(card[0][0]);
 
@@ -168,6 +175,7 @@ router.post("/editCard", async(req, res) => {
     const CardUpdate = await pool.query("update card set card_num=?, card_date=?, card_type=?;",[
 
     card_number, card_date, card_kind
+
     ]);
     console.log(CardUpdate[0]);
 
@@ -184,7 +192,20 @@ router.post("/editCard", async(req, res) => {
 
 // 카드 삭제 기능
 
+router.get("/cardDel/:target" , async(req,res) => {
 
+    const target = req.params.target;
+    try {
+        const cardDel = await pool.query("delete from card where card_id = ?", [
+            target
+        ]);
+        res.redirect("/user/myPage");
+    }catch (error){
+        console.log(error);
+        res.redirect("/user/myPage");
+    }
+
+});
 
 
 
@@ -239,17 +260,66 @@ router.post('/addParcel', async (req, res) => {
 });
 
 // 배송지 수정 페이지
-router.post("/address/update", async(req ,res) => {
+router.post("/address/update/:target", async(req ,res) => {
     const pid = req.body.pid;
     const sess = req.session.user_id;
-    const address = await pool.query("select * from address where user_user_id = ?",[
-        sess
+    const address = await pool.query("select * from address where user_user_id = ? and address_id = ?",[
+        sess, pid
     ]);
     console.log(address[0]);
+    res.render("editParcel" ,{ address : address[0], sess:sess});
 })
 
-// 배송지 수정 기능
 
+// 배송지 수정 기능
+router.post("/editParcel", async (req, res) => {
+    const sess = req.session.user_id;
+    const pid = req.body.pid;
+    const {address_postnum , address_basicaddress, address_detailaddress} = req.body;
+
+    console.log(address_postnum, address_basicaddress,address_detailaddress);
+
+    try{
+
+    const addressUpdate = await pool.query("update address set address_postnum = ?, address_basicaddress = ?, address_datailaddress = ?;",[
+
+        Number(address_postnum), address_basicaddress, address_detailaddress
+
+    ]);
+
+    console.log("!!", addressUpdate[0]);
+
+        return res.send(`<script type = "text/javascript">
+    alert("배송지 정보가 수정 되었습니다.");
+    location.href='/user/myPage';
+    </script>`);
+
+    }catch (err){
+        console.log(err);
+        return res.send(`<script type = "text/javascript">
+    alert("배송지 정보를 다시 확인해주세요.");
+        location.href='/user/myPage';
+    </script>`);
+    }
+
+
+});
+
+// 배송지 삭제 기능
+router.get("/parcelDel/:target" , async(req,res) => {
+
+    const target = req.params.target;
+    try {
+        const cardDel = await pool.query("delete from address where address_id = ?", [
+            target
+        ]);
+        res.redirect("/user/myPage");
+    }catch (error){
+        console.log(error);
+        res.redirect("/user/myPage");
+    }
+
+});
 
 
 

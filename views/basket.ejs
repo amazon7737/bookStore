@@ -19,6 +19,11 @@
         th {
             padding-right: 1rem;
         }
+        .container{
+            width: 80%;
+            box-shadow: rgb(0 0 0 / 15%) 0px 8px 16px 0px;
+
+        }
         /* -------- */
     </style>
 </head>
@@ -31,29 +36,29 @@
             <form action="/purchase" method="post">
 
 
-<!--                <p class="title"><%= sess %>님이 담으신 책 입니다.</p>-->
+                <p class="title"><%= sess %>님이 담으신 책 입니다.</p>
 
-<!--                <hr />-->
+                <hr />
 
-<!--                <table>-->
-<!--                    <thead>-->
-<!--                        <tr>-->
-<!--                            <th scope="col">책이름</th>-->
-<!--                            <th scope="col">가격</th>-->
-<!--                            <th scope="col">수량</th>-->
-<!--                        </tr>-->
-<!--                    </thead>-->
-<!--                    <tbody>-->
-<!--                        <% for(var i =0; i< basket.length ; i++) { %>-->
-<!--                        <tr>-->
-<!--                            <th scope="col"><%= basket[i].book_name %></th>-->
-<!--                            <th scope="col"><%= basket[i].book_price %></th>-->
-<!--                            <th scope="col"><%= basket[i].book_count %></th>-->
-<!--                            &lt;!&ndash; 삭제 &ndash;&gt;-->
-<!--                        </tr>-->
-<!--                        <% } %>-->
-<!--                    </tbody>-->
-<!--                </table>-->
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">책이름</th>
+                            <th scope="col">가격</th>
+                            <th scope="col">수량</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var i =0; i< basket.length ; i++) { %>
+                        <tr>
+                            <th scope="col"><%= basket[i].book_name %></th>
+                            <th scope="col"><%= basket[i].book_price %></th>
+                            <th scope="col"><%= basket[i].book_count %></th>
+                            <!-- 삭제 -->
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
 
                 <!-- 구매 -->
                 <button type="button" onclick="location.href = '#'">구매</button>
