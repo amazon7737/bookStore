@@ -9,7 +9,8 @@ const pool = require('../db/db');
  *  - 주문서 작성
  *  - 바로 구매 기능
  *  - 장바구니에 추가된 물품 구매 기능
- *  - 주문 내역 기능
+ *  - 주문 내역 기능(완료)
+ *  - 장바구니 물품 삭제 기능
  *
  */
 
@@ -263,7 +264,7 @@ router.get('/myPage', async (req, res) => {
 
     // console.log('sess:', sess);
     // console.log('card:', card[0]);
-    res.render('myPage', { card: card[0], address: address[0] });
+    res.render('myPage', { card: card[0], address: address[0], sess:sess });
 });
 
 
@@ -388,6 +389,8 @@ router.get('/basket', async (req, res) => {
      * basket list , basket 테이블 폭발 => 외래키 제약조건 쪽에 문제가 발생한것 같음. (단순 변수 이름문제로 확인)
      */
 });
+
+// 장바구니 물품 삭제
 
 
 
