@@ -1,0 +1,72 @@
+<!-- editCard -->
+
+<!-- form 태그 sess 삭제된 상태 -->
+
+<style>
+    /* css */
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    .wrap {
+      width: 100vw;
+      height: 500px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+    /* ---------- */
+  </style>
+  
+  
+  
+  <form action = "/user/editCard", method="post">
+  <div class="wrap">
+    <div class="w-50 container mt-5">
+      <div class="col-auto mb-3">
+        <input type="hidden" name="pid" value="<%- pid %>" />
+        <label class="col-form-label">카드 번호</label>
+        <input
+          name="card_number"
+          data-name="카드 번호"
+          type="text"
+          class="form-control"
+          value = "<%- card[0].card_num %>"
+        />
+
+      </div>
+      <div class="col-auto mb-3">
+        <label class="col-form-label">카드 유효기간</label>
+        <input
+          name="card_date"
+          data-name="카드 유효기간"
+          type="text"
+          class="form-control"
+          value = "<%- card[0].card_date %>"
+        />
+      </div>
+      <div class="col-auto mb-5">
+        <label class="col-form-label">카드 종류</label>
+        <input
+          name="card_kind"
+          data-name="카드 종류"
+          type="text"
+          class="form-control"
+          value = "<%- card[0].card_type %>"
+        />
+      </div>
+      <div class="col-auto">
+        <button
+          type="submit"
+          class="w-100 btn btn-primary btn-lg"
+          style="height: 65px"
+          ;
+        >
+          수정
+        </button>
+      </div>
+    </div>
+  </form>
+  </div>
+  

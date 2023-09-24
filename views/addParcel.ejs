@@ -1,7 +1,8 @@
-<!-- addParcel address -->
+<!-- addaddress address -->
 
 <!-- form 태그 sess 삭제된 상태 -->
 <style>
+    /* css */
     * {
         padding: 0;
         margin: 0;
@@ -14,6 +15,7 @@
         justify-content: center;
         align-items: center;
     }
+    /* --------- */
 </style>
 
 <div class="wrap">
@@ -22,7 +24,7 @@
             <div class="col-auto mb-3">
                 <label class="col-form-label">우편번호</label>
                 <input
-                    name="parcel_number"
+                    name="address_id"
                     data-name="우편번호"
                     type="text"
                     class="form-control"
@@ -32,7 +34,7 @@
             <div class="col-auto mb-3">
                 <label class="col-form-label">기본주소</label>
                 <input
-                    name="parcel_address1"
+                    name="address_basicaddress"
                     data-name="기본주소"
                     type="text"
                     class="form-control"
@@ -42,7 +44,7 @@
             <div class="col-auto mb-5">
                 <label class="col-form-label">상세주소</label>
                 <input
-                    name="parcel_address2"
+                    name="address_detailaddress"
                     data-name="상세주소"
                     type="text"
                     class="form-control"

@@ -1,19 +1,16 @@
-var express = require("express");
+var express = require('express');
 var router = express.Router();
-const pool = require("../db/db");
+const pool = require('../db/db');
 
 /* GET home page. */
-router.get("/", async (req, res, next) => {
-  res.render("logo", { title: "Express" });
-});
 
-router.get("/main", async (req, res) => {
-  const book = await pool.query("select * from book.book_list;");
-  // console.log(book[0]);
-  let sess = req.session.user_id;
-  console.log("sess:", sess);
+router.get('/', async (req, res) => {
+    const book = await pool.query('select * from book.book;');
+    // console.log(book[0]);
+    let sess = req.session.user_id;
+    console.log('sess:', sess);
 
-  res.render("index", { book: book[0], sess: sess });
+    res.render('index', { book: book[0], sess: sess });
 });
 
 // router.get("/test", async (req, res) => {

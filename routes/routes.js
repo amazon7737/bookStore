@@ -4,7 +4,7 @@ const pool = require('../db/db');
 /**
  *  해야할것:
  *
- *  - 중복 회원 조회 기능
+ *  - 중복 회원 조회 기능(폐기 => 구현 필요성 못느낌)
  *  - 로그인 세션 기능(완료)
  *  - 주문서 작성
  *  - 바로 구매 기능
@@ -20,13 +20,13 @@ router.get('/signin', async (req, res) => {
 
 // 로그인 기능
 router.post('/signin', async (req, res) => {
-    const { user_id, password } = req.body;
+    const { user_id, user_pw } = req.body;
     //   console.log("user_id:", user_id, "password:", password);
 
     try {
         const login = await pool.query(
-            'select * from book.user where user_id = ? and password = ?',
-            [user_id, password]
+            'select * from book.user where user_id = ? and user_pw = ?',
+            [user_id, user_pw]
         );
 
         console.log('login:', login[0]);
@@ -43,7 +43,7 @@ router.post('/signin', async (req, res) => {
             req.session.user_id = user_id;
             console.log(req.session.user_id);
         }
-        return res.redirect('/main');
+        return res.redirect('/');
     } catch (error) {
         console.log(error);
         res.send(
@@ -62,7 +62,7 @@ router.get('/logout', async (req, res) => {
             req.session;
         });
         return res.send(
-            `<script type = "text/javascript" >alert("로그아웃되었습니다.");location.href='/main';</script>`
+            `<script type = "text/javascript" >alert("로그아웃되었습니다.");location.href='/';</script>`
         );
     } catch (error) {
         console.log(error);
@@ -76,20 +76,20 @@ router.get('/signup', async (req, res) => {
 
 // 회원가입 기능
 router.post('/signup', async (req, res) => {
-    const { user_id, password, user_name } = req.body;
-    console.log(user_id, password, user_name);
+    const { user_id, user_pw, user_name } = req.body;
+    console.log(user_id, user_pw, user_name);
     try {
         const users = await pool.query('insert into book.user values(?, ?, ?)', [
             user_id,
-            password,
+            user_pw,
             user_name,
         ]);
         console.log('user_id:', user_id);
         return res.redirect('/');
     } catch (error) {
-        if (user_id.length == 0 || password.length == 0 || user_name.length == 0) {
+        if (user_id.length == 0 || user_pw.length == 0 || user_name.length == 0) {
             return res.send(
-                `<script type = "text/javascript">alert("아이디 및 비밀번호를 확인해주세요."); location.href = '/user/signin';</script>`
+                `<script type = "text/javascript">alert("빈칸을 확인해주세요."); location.href = '/user/signin';</script>`
             );
         } else {
             return res.send(
@@ -106,11 +106,13 @@ router.post('/signup', async (req, res) => {
 //   res.render("booklist", { book: book[0] });
 // });
 
+
 // 카드 추가 페이지
 router.get('/addCard', async (req, res) => {
     const sess = req.session.user_id;
     res.render('addCard');
 });
+
 
 // 카드 추가 기능
 router.post('/addCard', async (req, res) => {
@@ -118,12 +120,14 @@ router.post('/addCard', async (req, res) => {
     const { card_number, card_date, card_kind } = req.body;
 
     try {
-        const query = await pool.query('insert into book.card values(?, ?, ?, ?)', [
+
+        const query = await pool.query('insert into book.card values(null, ?, ?, ?, ?)', [
             card_number,
             card_date,
             card_kind,
             sess,
         ]);
+
         console.log('card_number:', card_number, 'card_date:', card_date, 'card_kind:', card_kind);
         console.log('user_id:', sess);
         console.log('query:', query);
@@ -138,35 +142,86 @@ router.post('/addCard', async (req, res) => {
     }
 });
 
+//카드 수정 페이지
+router.post("/card/update/:target", async(req, res) => {
+    const sess = req.session.user_id;
+    const pid = req.body.pid;
+    const card = await pool.query("select * from card where user_user_id = ?", [sess]);
+    console.log(card[0]);
+    console.log(card[0][0]);
+
+    res.render("editCard", {
+        card: card[0],
+        pid: req.body.pid
+    });
+});
+
+// 카드 수정 기능
+router.post("/editCard", async(req, res) => {
+    const sess = req.session.user_id;
+    const pid = req.body.pid;
+    const {card_number, card_date, card_kind} = req.body;
+    console.log(card_number , card_date, card_kind);
+    try{
+
+    const CardUpdate = await pool.query("update card set card_num=?, card_date=?, card_type=?;",[
+
+    card_number, card_date, card_kind
+    ]);
+    console.log(CardUpdate[0]);
+
+    return res.send(`<script type = "text/javascript">
+    alert("카드 정보가 수정 되었습니다.");
+    location.href='/user/myPage';
+    </script>`);
+
+    }catch(err){
+        console.log(err);
+    }
+
+})
+
+// 카드 삭제 기능
+
+
+
+
+
+
+
 // 배송지 주소 추가 페이지
-router.get('/addparCel', async (req, res) => {
+router.get('/addParcel', async (req, res) => {
     res.render('addParcel');
 });
 
+
+
+// 배송지 주소 추가 기능
 router.post('/addParcel', async (req, res) => {
     const sess = req.session.user_id;
-    const { parcel_number, parcel_address1, parcel_address2 } = req.body;
+    const { address_id, address_basicaddress, address_detailaddress } = req.body;
 
     console.log(
-        'parcel_number:',
-        parcel_number,
-        'parcel_address1:',
-        parcel_address1,
-        'parcel_address2:',
-        parcel_address2
+        'address_id:',
+        address_id,
+        'address_basicaddress:',
+        address_basicaddress,
+        'address_detailaddress:',
+        address_detailaddress
     );
 
     try {
-        if (parcel_number.length != 5) {
+        if (address_id.length != 5) {
             return res.send(`
         <script type = "text/javascript" >alert("배송지 번호를 다시 확인해주세요.");location.href='/user/myPage';</script>
         `);
         }
-        if (Number(parcel_number)) {
-            const parcel = await pool.query('insert into book.parcel values(?, ?,?,?)', [
-                parcel_number,
-                parcel_address1,
-                parcel_address2,
+
+        if (Number(address_id)) {
+            const address = await pool.query('insert into book.address values(null,?, ?,?,?)', [
+                address_id,
+                address_basicaddress,
+                address_detailaddress,
                 sess,
             ]);
             return res.send(
@@ -182,28 +237,45 @@ router.post('/addParcel', async (req, res) => {
     }
 });
 
+// 배송지 수정 페이지
+router.post("/address/update", async(req ,res) => {
+    const pid = req.body.pid;
+    const sess = req.session.user_id;
+    const address = await pool.query("select * from address where user_user_id = ?",[
+        sess
+    ]);
+    console.log(address[0]);
+})
+
+// 배송지 수정 기능
+
+
+
+
+
 // 마이페이지
 router.get('/myPage', async (req, res) => {
     const sess = req.session.user_id;
     const card = await pool.query('select * from book.card where user_user_id = ?;', [sess]);
-    const parcel = await pool.query('select * from book.parcel where user_user_id = ?', [sess]);
-    console.log('parcel:', parcel[0]);
+    const address = await pool.query('select * from book.address where user_user_id = ?', [sess]);
+    console.log('card:', card[0]);
+    console.log('address:', address[0]);
 
     // console.log('sess:', sess);
     // console.log('card:', card[0]);
-    res.render('myPage', { card: card[0], parcel: parcel[0] });
+    res.render('myPage', { card: card[0], address: address[0] });
 });
+
+
 
 // 도서 상세 페이지
 router.get('/bookdetail/:book_number', async (req, res) => {
     const sess = req.session.user_id;
     // console.log(req.params);
     const { book_number } = req.params;
-    const book = await pool.query('SELECT * FROM book.book_list where book_number = ?;', [
-        book_number,
-    ]);
+    const book = await pool.query('SELECT * FROM book.book where book_number = ?;', [book_number]);
 
-    // console.log(book[0]);
+    console.log(book[0]);
     try {
         res.render('bookDetail', { book: book[0], sess: sess });
     } catch (error) {
@@ -211,75 +283,113 @@ router.get('/bookdetail/:book_number', async (req, res) => {
     }
 });
 
-// 장바구니 담기/추가
+
+
+// 장바구니 담기 / 추가
 router.post('/addItem/:book_number', async (req, res) => {
+
     // console.log("???", req.params);
     // console.log(req.body);
-    const { rest, book_number } = req.body;
-    const sess = req.session.user_id;
-    // const { book_number } = req.params;
 
+    console.log(req.body);
+
+    const {count, book_number, book_price} = req.body;
+
+
+    // console.log(count, book_number, book_price);
+
+    // console.log("book_price", book_price);
+
+
+    const sess = req.session.user_id;
+
+
+    // 날짜 생성
     let today = new Date();
     let year = today.getFullYear();
     let month = today.getMonth();
     let date = today.getDate();
     const wdate = year + '-' + month + '-' + date;
-    const bookAlready = await pool.query(
-        'select * from book.basket where book_list_book_number = ?',
-        [book_number]
-    );
-    // console.log('bookAlready:', bookAlready[0]);
-    try {
-        if (bookAlready[0].length != 0) {
-            // console.log('rest:', rest);
-            // console.log('restAlready:', bookAlready[0][0].rest);
-            // console.log('result:', parseInt(rest) + parseInt(bookAlready[0][0].rest));
-            const result = parseInt(rest) + parseInt(bookAlready[0][0].rest);
-            const basket = await pool.query(
-                'update book.basket set rest = ? where user_user_id = ? and book_list_book_number =?',
-                [result, sess, book_number]
-            );
-            console.log(basket[0]);
-        } else {
-            const basket = await pool.query('insert into book.basket values( null, ?,?, ?, ?)', [
-                wdate,
-                rest,
-                book_number,
-                sess,
+
+
+    try{
+        const basket = await pool.query("select * from basket where user_user_id = ?",[
+            sess
+        ]);
+
+        // 회원님의 장바구니가 없으면
+        if (basket[0].length === 0){
+            const basketMake = await pool.query("insert into basket values(null, ?,?)",[
+                wdate,sess
             ]);
-            console.log(basket[0]);
         }
-        // console.log(basket[0]);
-        return res.send(
-            `<script type = "text/javascript" >alert("장바구니에 담았습니다.");location.href='/main';</script>`
-        );
-    } catch (error) {
-        console.log(error);
+
+        // 바구니 id 검색
+        const basketData = await pool.query("select * from basket where user_user_id =?",[
+            sess
+        ]);
+
+        console.log("basketData", basketData[0]);
+        const basketId = basketData[0][0].basket_id;
+
+        // 이미 장바구니에 담은 물건인가?
+        const basketSearch = await pool.query("select count(*) cnt from basket_list where basket_basket_id =? and book_book_number=?",[
+            basketId, book_number
+        ]);
+        const cnt = basketSearch[0][0].cnt;
+        console.log("search:",basketSearch[0][0].cnt);
+        if (cnt >= 1){
+            console.log("이미 있는책이네요");
+            const bookcnt = await pool.query("select book_count as cnt, book_price as price from basket_list where book_book_number=? and basket_basket_id =?",[
+                book_number, basketId
+            ]);
+
+            const bookcnt2 = String(Number(bookcnt[0][0].cnt) + Number(count));
+            const totalPrice = String(Number(bookcnt[0][0].price) * Number(bookcnt2));
+            console.log("!!!,",bookcnt2, totalPrice);
+            const basketUpdate = await pool.query("update basket_list set book_count=?,book_price=? where basket_basket_id = ? and book_book_number=?;",[
+                bookcnt2 , totalPrice , basketId,Number(book_number)
+            ]);
+            // console.log("!!!",basketUpdate[0]);
+        }else{
+            console.log("그냥 추가했어요")
+            const basketInsert = await pool.query("insert into basket_list values(?,?,?,?)",[
+                book_number, basketId, count, book_price
+            ])
+            // console.log("basketInsert:", basketInsert[0]);
+        }
+        return res.send(`<script type = "text/javascript"> alert("장바구니에 담았습니다.)"); location.href="/";</script>`);
+
+    }catch(err){
+        console.log(err);
     }
-    res.redirect('/main');
+
 });
 
-// 장바구니 조회 (완료)
-// join 사용
+
+
+// 장바구니 조회 (수정사항 발견) join 2번
 router.get('/basket', async (req, res) => {
     const sess = req.session.user_id;
-
+    
     const basket = await pool.query(
-        'SELECT * FROM book.basket a inner join book.book_list b on a.book_list_book_number = b.book_number and a.user_user_id = ?;',
-        [sess]
+        'SELECT b.book_count, b.book_price, c.book_name FROM book.basket a inner join book.basket_list b on a.basket_id = b.basket_basket_id inner join book.book c on c.book_number=b.book_book_number;',
     );
-
     console.log(basket[0]);
 
-    res.render('basket', { basket: basket[0], sess: sess });
+    // res.render('basket', { basket: basket[0], sess: sess });
+    res.render("basket", {basket: basket[0], sess:sess});
 
     /**
      *
-     * 수량을 기준으로 데이터를 땡겨와야될지 , 장바구니 담기에서 애초에 개수를 추가해야될지.
+     * 수량을 기준으로 데이터를 땡겨와야될지 , 장바구니 담기에서 애초에 개수를 추가해야될지. (구현완료)
      * 수량을 기준으로 땡겨오는걸로 ( 구현완료)
-     * basket 테이블 rest 속성값 추가
+     * basket 테이블 rest 속성값 추가 (완료)
+     * basket list , basket 테이블 폭발 => 외래키 제약조건 쪽에 문제가 발생한것 같음. (단순 변수 이름문제로 확인)
      */
 });
+
+
 
 // 검색
 router.post('/search', async (req, res) => {
@@ -287,13 +397,13 @@ router.post('/search', async (req, res) => {
     const sess = req.session.user_id;
 
     // console.log(key);
-    const search = await pool.query('select * from book.book_list where book_name like ?', [
+    const search = await pool.query('select * from book.book where book_name like ?', [
         '%' + key + '%',
     ]);
     if (key.length === 0) {
         return res.send(`<script type = "text/javascript">
     alert("검색어를 입력해주세요.");
-    location.href='/main';
+    location.href='/';
     </script>`);
     } else {
         return res.render('booksearch', { book: search[0], sess: sess });
