@@ -2,6 +2,7 @@
 <head>
     <style>
         /* css */
+
         * {
             padding: 0;
             margin: 0;
@@ -24,6 +25,7 @@
             box-shadow: rgb(0 0 0 / 15%) 0px 8px 16px 0px;
 
         }
+
         /* -------- */
     </style>
 </head>
@@ -33,8 +35,7 @@
     <div class="wrap">
 
         <div class="container">
-            <form action="/purchase" method="post">
-
+            <form action="/order" method="post">
 
                 <p class="title"><%= sess %>님이 담으신 책 입니다.</p>
 
@@ -61,7 +62,7 @@
                 </table>
 
                 <!-- 구매 -->
-                <button type="button" onclick="location.href = '#'">구매</button>
+                <button type="button" onclick="location.href = '#'">주문하기</button>
             </form>
         </div>
     </div>

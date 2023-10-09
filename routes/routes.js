@@ -14,9 +14,11 @@ const pool = require('../db/db');
  *  - 카드 목록 삭제 , 수정 기능(완료)
  *  - 장바구니 물품 삭제 기능
  *  - 장바구니 ui 수정 => yes24 반영
+ *  - 장바구니 물품 삭제
  *  - 페이지들 ui 검사
  *  - 주문내역 페이지
  *  - 책 이미지 넣기 작업 (완료)
+ * 
  */
 
 // 로그인 페이지
@@ -338,7 +340,6 @@ router.get('/myPage', async (req, res) => {
 });
 
 
-
 // 도서 상세 페이지
 router.get('/bookdetail/:book_number', async (req, res) => {
     const sess = req.session.user_id;
@@ -366,12 +367,13 @@ router.post('/addItem/:book_number', async (req, res) => {
 
     const {count, book_number, book_price} = req.body;
 
+    // 책 개수 0개 이하 알림
+
+    if (count <= 0){
+        return res.send(`<script type = "text/javascript">alert("책을 다시 담아주세요."); history.go(-1);</script>`)
+    }
 
     // console.log(count, book_number, book_price);
-
-    // console.log("book_price", book_price);
-
-
     const sess = req.session.user_id;
 
 
@@ -457,7 +459,9 @@ router.get('/basket', async (req, res) => {
      * 수량을 기준으로 땡겨오는걸로 ( 구현완료)
      * basket 테이블 rest 속성값 추가 (완료)
      * basket list , basket 테이블 폭발 => 외래키 제약조건 쪽에 문제가 발생한것 같음. (단순 변수 이름문제로 확인)
+     * 
      */
+
 });
 
 // 장바구니 물품 삭제

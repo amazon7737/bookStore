@@ -15,6 +15,7 @@
                 flex-wrap: wrap;
                 background-color: #f8f9fa;
             }
+
             @keyframes enter-animation {
                 0% {
                     transform: translateY(100px);
@@ -43,6 +44,7 @@
             <input type="hidden" name="book_number" value="<%=book[i].book_number %>" />
 
             <a href="user/bookdetail/<%= book[i].book_number%>"> <% include ./card.ejs %> </a>
+
             <% } %>
         </div>
     </body>
